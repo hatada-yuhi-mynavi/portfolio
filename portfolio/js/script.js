@@ -38,13 +38,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Add parallax effect to header with throttling
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let ticking = false;
     window.addEventListener('scroll', function() {
         if (!ticking) {
             window.requestAnimationFrame(function() {
                 const scrolled = window.scrollY;
                 const header = document.querySelector('header');
-                if (header && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                if (header && !prefersReducedMotion.matches) {
                     header.style.transform = `translateY(${scrolled * 0.3}px)`;
                 }
                 ticking = false;
