@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Observe all sections and glass cards for animation
-    document.querySelectorAll('section, .glass-card').forEach(element => {
+    // Observe all sections for animation (glass-cards are inside sections, so only observe sections)
+    document.querySelectorAll('section').forEach(element => {
         element.style.opacity = '0';
         element.style.transform = 'translateY(30px) scale(0.95)';
         element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Add dynamic keyframes for animations
+    const RIPPLE_DURATION = 600; // milliseconds
     const style = document.createElement('style');
     style.textContent = `
         @keyframes tagPulse {
@@ -154,9 +155,17 @@ document.addEventListener('DOMContentLoaded', function() {
             50% { transform: scale(1.15); }
         }
         
+        @keyframes ripple {
+            to {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
         @media (prefers-reduced-motion: reduce) {
             @keyframes tagPulse { }
             @keyframes tagBounce { }
+            @keyframes ripple { }
         }
     `;
     document.head.appendChild(style);
@@ -201,25 +210,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 left: ${x}px;
                 top: ${y}px;
                 pointer-events: none;
-                animation: ripple 0.6s ease-out;
+                animation: ripple ${RIPPLE_DURATION}ms ease-out;
             `;
-            
-            const rippleStyle = document.createElement('style');
-            rippleStyle.textContent = `
-                @keyframes ripple {
-                    to {
-                        transform: scale(2);
-                        opacity: 0;
-                    }
-                }
-            `;
-            document.head.appendChild(rippleStyle);
             
             this.style.position = 'relative';
             this.style.overflow = 'hidden';
             this.appendChild(ripple);
             
-            setTimeout(() => ripple.remove(), 600);
+            setTimeout(() => ripple.remove(), RIPPLE_DURATION);
         });
     });
 
