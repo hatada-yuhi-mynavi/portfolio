@@ -38,6 +38,12 @@ body::before {
     }
 }
 
+@media (prefers-reduced-motion: reduce) {
+    body::before {
+        animation: none;
+    }
+}
+
 .container {
     max-width: 1000px;
     margin: 0 auto;
@@ -97,6 +103,12 @@ header::before {
     }
 }
 
+@media (prefers-reduced-motion: reduce) {
+    header::before {
+        animation: none;
+    }
+}
+
 .hero-content {
     position: relative;
     z-index: 1;
@@ -122,6 +134,12 @@ header::before {
     }
     50% {
         transform: translateY(-10px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .profile-image-container {
+        animation: none;
     }
 }
 
@@ -322,7 +340,7 @@ h2 {
     font-size: 1.4em;
     font-weight: 600;
     margin: 20px 0;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .contact-email a {

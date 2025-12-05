@@ -37,12 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(section);
     });
 
-    // Add parallax effect to header
+    // Add parallax effect to header with throttling
+    let ticking = false;
     window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const header = document.querySelector('header');
-        if (header) {
-            header.style.transform = `translateY(${scrolled * 0.3}px)`;
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                const scrolled = window.scrollY;
+                const header = document.querySelector('header');
+                if (header && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    header.style.transform = `translateY(${scrolled * 0.3}px)`;
+                }
+                ticking = false;
+            });
+            ticking = true;
         }
     });
 
