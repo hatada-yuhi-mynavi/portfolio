@@ -109,23 +109,79 @@ header::before {
     }
 }
 
-.hero-content {
-    position: relative;
-    z-index: 1;
+/* Background decorations */
+.background-decoration {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.15;
 }
 
-.profile-image-container {
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 30px;
-    border-radius: 50%;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.3);
+.ai-chip {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 3px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    animation: float 3s ease-in-out infinite;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    animation: float 4s ease-in-out infinite;
+}
+
+.ai-chip::before {
+    content: 'AI';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.neural-network {
+    position: absolute;
+    bottom: 20%;
+    left: 8%;
+    width: 150px;
+    height: 150px;
+    background: 
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+    animation: float 6s ease-in-out infinite 1s;
+}
+
+.data-visualization {
+    position: absolute;
+    top: 40%;
+    left: 5%;
+    width: 100px;
+    height: 80px;
+    background: linear-gradient(
+        to top,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.3) 20%,
+        transparent 20%,
+        transparent 25%,
+        rgba(255, 255, 255, 0.3) 25%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 50%,
+        transparent 55%,
+        rgba(255, 255, 255, 0.3) 55%,
+        rgba(255, 255, 255, 0.3) 80%,
+        transparent 80%
+    );
+    background-size: 25% 100%;
+    background-repeat: repeat-x;
+    animation: float 5s ease-in-out infinite 0.5s;
 }
 
 @keyframes float {
@@ -133,20 +189,59 @@ header::before {
         transform: translateY(0px);
     }
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-20px);
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .profile-image-container {
+    .ai-chip,
+    .neural-network,
+    .data-visualization {
         animation: none;
     }
 }
 
-.profile-image {
+/* Floating particles */
+#particles-container {
+    position: fixed;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    animation: particleFloat linear infinite;
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(var(--drift));
+        opacity: 0;
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
 }
 
 h1 {
@@ -426,11 +521,6 @@ footer {
 
     .career-item::before {
         left: -32px;
-    }
-
-    .profile-image-container {
-        width: 150px;
-        height: 150px;
     }
 
     .tech-stack {
